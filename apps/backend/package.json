@@ -6,10 +6,24 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "preview": "nuxt preview",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "test": "vitest run",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@speaktype/shared": "workspace:*",
-    "nuxt": "^4.4.8"
+    "better-auth": "^1.2.7",
+    "jose": "^5",
+    "@upstash/redis": "^1",
+    "drizzle-orm": "^0.41.0",
+    "nuxt": "^4.4.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.30.4",
+    "vitest": "^3.0.0"
   }
 }

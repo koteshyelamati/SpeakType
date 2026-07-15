@@ -8,14 +8,23 @@
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
-    "typecheck": "vue-tsc --noEmit && wxt prepare"
+    "typecheck": "wxt prepare && vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "gen:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
-    "@speaktype/shared": "workspace:*"
+    "@speaktype/shared": "workspace:*",
+    "pinia": "^2.2.0",
+    "vue-demi": "^0.14.10"
   },
   "devDependencies": {
     "@wxt-dev/module-vue": "^1.0.0",
+    "happy-dom": "^20.10.4",
+    "sharp": "^0.34.0",
+    "vitest": "^4.1.9",
     "vue": "^3.5.0",
+    "vue-tsc": "^2.1.10",
     "wxt": "^0.20.0"
   }
 }

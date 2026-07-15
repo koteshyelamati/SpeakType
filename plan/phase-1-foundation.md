@@ -1,10 +1,15 @@
-# Phase 1 — Foundation
+# Phase 1 — Foundation  ☑ DONE
 
 **Goal:** Stand up the monorepo skeleton, the database + auth, the shared API contract,
 and the project's reference docs (design, analysis, memory) — so feature work in later
 phases has a stable, consistent base.
 
 **Cost:** Free. Neon, Upstash, Groq, Gemini all on free tiers. No paid step.
+
+## Load first
+- Skill: `.claude/skills/monorepo-gotchas/SKILL.md`
+- Memory: `memory/stack-decisions.md`, `memory/cost-and-free-tiers.md`
+- Code: root + `*/package.json`, `*/tsconfig.json`, `eslint.config.mjs`, `apps/backend/server/db/**`
 
 ## Tasks
 
@@ -18,16 +23,16 @@ phases has a stable, consistent base.
 - ☑ `LICENSE` (MIT)
 
 ### Scaffolding (installs dependencies)
-- ☐ `apps/extension` — WXT + Vue 3 + TS (`pnpm create wxt`), Pinia, folders: components/composables/stores/services/types/styles
-- ☐ `apps/backend` — Nuxt 4 + Nitro, folders: server/api, server/middleware, server/services, server/db, server/utils
-- ☐ `packages/shared` — `@speaktype/shared`: `api-contract.ts`, `schemas.ts` (Zod), `constants.ts`
-- ☐ Wire `workspace:*` deps; confirm `pnpm install` resolves links
+- ☑ `apps/extension` — WXT + Vue 3 + TS (`pnpm create wxt`), Pinia, folders: components/composables/stores/services/types/styles
+- ☑ `apps/backend` — Nuxt 4 + Nitro, folders: server/api, server/middleware, server/services, server/db, server/utils
+- ☑ `packages/shared` — `@speaktype/shared`: `api-contract.ts`, `schemas.ts` (Zod), `constants.ts`
+- ☑ Wire `workspace:*` deps; confirm `pnpm install` resolves links
 
 ### Database + auth
-- ☐ Drizzle config + schema (tables from the design doc, UUID PKs for non-auth tables)
-- ☐ Neon connection via `@neondatabase/serverless`; `.env.example` with all keys
-- ☐ `drizzle generate` + `migrate` (NEVER `push`) against a free Neon database
-- ☐ BetterAuth set up (bearer JWT + refresh rotation), its tables migrated
+- ☑ Drizzle config + schema (tables from the design doc, UUID PKs for non-auth tables)
+- ☑ Neon connection via `@neondatabase/serverless`; `.env.example` with all keys
+- ☑ `drizzle generate` + `migrate` (NEVER `push`) against a free Neon database
+- ☑ BetterAuth set up (bearer JWT + refresh rotation), its tables migrated
 
 ## Verify
 - `pnpm install`, `pnpm typecheck`, `pnpm lint` all clean

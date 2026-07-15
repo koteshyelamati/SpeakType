@@ -6,6 +6,36 @@
 - explain the terminal commands you are going to run before running them,in short 
 - use the terminal wmux tool to run service when every you see an ideal pane instead of runing it  in the background.  
 - Prefer an existing warm, idle agent pane when it matches the needed agent. If no matching warm pane exists, run the agent in a free owned pane. If there is no ideal pane, ask the user to open a terminal beside you and run the agent there.
+
+## DELEGATING TO PI AGENTS (long prompts)
+
+- ⛔ **pi agents (Gemini/DeepSeek/Qwen) run LIVE in a WMUX pane in Workspace 1 — never headless, never in the background.** See the `call-agent` skill. No drivable pane → STOP and ask the user to open a terminal in Workspace 1 and run `pi`, then send the task into it.
+- The TUI eats long pasted text and the command parser caps a line at ~**965 bytes**. So for any non-trivial pi prompt: write the full prompt to a temp markdown file in the repo (e.g. `.task-<name>.md`), then send the short line **into the live pane**: `Read ./.task-<name>.md and execute it fully.` (pi has repo file access via `-a`).
+- **Delete the temp `.md` file when the task is done.**
+
+## CONTEXT MAP — the front door
+
+Before any task, open **@context-map.md**. It routes each work area → the exact files to load
+(skill + memory + contract + code), and points to the matching `plan/phase-N.md` whose
+**`## Load first`** block is the authoritative per-phase bundle. Load only what the row names —
+don't read the whole repo. When delegating, copy **`.task-template.md`** → `.task-<name>.md`,
+fill its read-list from the map, and delete the temp file when done.
+
+## SKILLS — read the matching one BEFORE you start
+
+Project skills live in `.claude/skills/<name>/SKILL.md`. At the **start of a task**, read the
+skill(s) whose trigger matches — and when you delegate, pass the relevant skill's rules to the
+agent (the Phase-1 scaffolding bugs happened because the rules weren't given up front).
+
+| Read this skill | Before you… |
+| --- | --- |
+| **`monorepo-gotchas`** | scaffold anything, wire tooling (tsconfig/eslint/prettier), run the verify gate, or **delegate a scaffold**. Always read this first for build/config work. |
+| **`vue`** | touch `apps/extension/**` — components, stores, composables, content script, popup, tsconfig, or the extension typecheck/dev/build. |
+| **`nuxt`** | touch `apps/backend/server/**` or `nuxt.config.ts` — API routes, middleware, utils, BetterAuth, or the backend typecheck/dev/build. |
+| **`drizzle`** | change the DB schema or run migrations (`apps/backend/server/db/**`). Pairs with the DATABASE SCHEMA CHANGES rule below. |
+| **`fast-delegate`** | decide WHERE to delegate — routes pi work to `call-agent` (live pane) and Claude work to the `Agent` tool. Headless pi is **deprecated/forbidden**. |
+| **`call-agent`** | delegate to a pi agent (Gemini/DeepSeek/Qwen) — **always live in a visible WMUX pane in Workspace 1**, never headless/background (check `a2a_whoami` first). |
+
 ## PLANNING MODE
 
 - Always ask clarifying questions

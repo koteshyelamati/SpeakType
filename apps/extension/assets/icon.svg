@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="st-grad" x1="8" y1="8" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4285F4"/>
+      <stop offset="1" stop-color="#6C5CE7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle brand background -->
+  <rect x="4" y="4" width="120" height="120" rx="30" fill="url(#st-grad)"/>
+
+  <!-- Soft top highlight for depth -->
+  <rect x="4" y="4" width="120" height="60" rx="30" fill="#FFFFFF" opacity="0.10"/>
+
+  <!-- Microphone (white) -->
+  <g fill="#FFFFFF">
+    <rect x="52" y="30" width="24" height="42" rx="12"/>
+    <rect x="60.5" y="84" width="7" height="14" rx="3.5"/>
+    <rect x="46" y="97" width="36" height="7" rx="3.5"/>
+  </g>
+  <path d="M42 60a22 22 0 0 0 44 0" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" fill="none"/>
+</svg>

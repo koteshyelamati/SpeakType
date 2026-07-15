@@ -22,13 +22,22 @@ These were chosen with the project owner. Do not silently change them.
 - Design doc said **Supabase Auth**; AGENTS.md mandated **BetterAuth + Drizzle**. → BetterAuth + Drizzle wins.
 - Design doc STT/AI = OpenAI (paid). → Replaced with Groq + Gemini (free).
 
-## Activation (UX, locked)
-- Two triggers, same state machine: **mic click** or **keyboard toggle** (press on / press off).
-- Shortcut via Chrome `commands` API. Defaults keep the "W": `Alt+Shift+W` (Win/Linux),
-  `MacCtrl+Shift+W` = Ctrl+Shift+W (Mac; ⌘+W/⌘+Shift+W close tabs/windows → avoided).
-- **Windows/Meta key is OS-reserved → unusable** in extensions; `commands` allows only
-  Ctrl/Alt/Shift (+ ⌘/MacCtrl on Mac). User rebinds at `chrome://extensions/shortcuts`.
-- Push-to-talk (hold) is deferred (would need content-script keydown/keyup), not in MVP unless requested.
+## Activation (UX, locked — updated 2026-06-16 after Phase 2)
+- **UI:** a **bottom-center, viewport-fixed pill** (Wispr-style), shown when an editable field
+  is focused. `position:fixed` so it never drifts on scroll; not anchored to the field. It is
+  NOT a field-attached dot. Lives in a Shadow DOM (styles injected into the shadow root via
+  `src/styles/content-ui.css`, since page-level CSS can't cross the boundary).
+- **Two triggers, same state machine:** mic-pill **click**, or the **keyboard**.
+- **Keyboard = `Ctrl+Space`, handled in the content script** (`keydown`/`keyup`), NOT the
+  Chrome `commands` API. It supports BOTH:
+  - **Tap** (quick press) → toggle recording on; tap again → off.
+  - **Hold** (> ~350 ms) → push-to-talk; records while held, stops on release.
+  Push-to-talk is therefore **shipped**, not deferred. Only fires when an editable is focused;
+  otherwise `Ctrl+Space` passes through to the page.
+- **Why not `commands` API:** it only fires on key-DOWN (can't do hold), and 3-key combos
+  (`Alt+Shift+W`) often fail to auto-bind. The `Alt+Shift+W` command still exists in
+  `wxt.config.ts` as a best-effort secondary toggle, but `Ctrl+Space` is the reliable path.
+- Windows/Meta key remains OS-reserved/unusable for the `commands` fallback.
 
 ## Deferred to V2
 Realtime streaming (Deepgram/OpenAI Realtime), multi-language, team plans, retry queue.

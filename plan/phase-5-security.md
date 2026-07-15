@@ -5,6 +5,11 @@ high-demand, and it handles voice — security is first-class, not an afterthoug
 
 **Cost:** Free.
 
+## Load first
+- Skill: `.claude/skills/nuxt/SKILL.md` (+ `drizzle` for `refresh_tokens`/`audit_logs`)
+- Memory: `memory/security-and-performance.md`, `memory/api-contract.md`, `memory/stack-decisions.md`
+- Code: `apps/backend/server/middleware/**`, `apps/backend/server/utils/auth.ts`
+
 ## Tasks
 - ☐ Bearer JWT everywhere; refresh-token **rotation** (`refresh_tokens.revoked`)
 - ☐ CORS allowlist: dashboard origin + `chrome-extension://<id>` only

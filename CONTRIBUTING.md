@@ -12,6 +12,19 @@ By participating in this project, you agree to abide by our [Code of Conduct](CO
 
 ---
 
+## Do I Need an AI Subscription? No.
+
+SpeakType is developed with help from AI coding agents, but **you do not need any paid AI
+subscription, special model, or tooling to contribute.** The project is guaranteed to be
+fully buildable, testable, and contributable with nothing more than a plain editor and
+`git`. Use whatever assistant you like — a free chat tool, Copilot, a local model, or
+none at all. PRs are judged on the code, not the tools that produced it.
+
+If you're curious how the maintainer's agent workflow is organized (and the optional
+"tiers" of tooling you can use), see **[AI Workflow](docs/AI-WORKFLOW.md)**.
+
+---
+
 ## How Can I Contribute?
 
 ### 1. Reporting Bugs

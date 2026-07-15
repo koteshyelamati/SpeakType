@@ -1,0 +1,79 @@
+/* Material Design 3 Design Tokens for SpeakType */
+
+:root {
+  /* 2. Color (Light Theme) */
+  --st-primary: #4285f4; /* Google blue */
+  --st-on-primary: #ffffff;
+  --st-primary-container: #d7e3ff;
+  --st-on-primary-container: #001a41;
+
+  /* Secondary / accents (Google palette) */
+  --st-secondary: #34a853; /* green  */
+  --st-tertiary: #fbbc05; /* yellow */
+  --st-error: #ea4335; /* red    */
+  --st-on-error: #ffffff;
+
+  /* Surfaces */
+  --st-surface: #fdfcff;
+  --st-on-surface: #1a1c1e;
+  --st-surface-variant: #e1e2ec;
+  --st-on-surface-variant: #44474e;
+  --st-outline: #74777f;
+
+  /* Scrim / shadow */
+  --st-scrim: rgba(0, 0, 0, 0.32);
+
+  /* 4. Spacing scale (px) */
+  --st-space-4: 4px;
+  --st-space-8: 8px;
+  --st-space-12: 12px;
+  --st-space-16: 16px;
+  --st-space-24: 24px;
+  --st-space-32: 32px;
+
+  /* 4. Radius */
+  --st-radius-sm: 8px;
+  --st-radius-md: 12px;
+  --st-radius-lg: 20px;
+  --st-radius-full: 999px;
+
+  /* 4. Elevation */
+  --st-elev-1: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px rgba(60, 64, 67, 0.15);
+  --st-elev-2: 0 2px 6px rgba(60, 64, 67, 0.3), 0 1px 2px rgba(60, 64, 67, 0.15);
+
+  /* Modern depth — soft, layered, blue-tinted (used by popup + mic) */
+  --st-elev-soft: 0 6px 20px rgba(66, 99, 235, 0.14), 0 1px 4px rgba(60, 64, 67, 0.1);
+  --st-elev-lift: 0 12px 28px rgba(66, 99, 235, 0.22), 0 2px 8px rgba(60, 64, 67, 0.12);
+
+  /* Brand gradient — Google blue → indigo (one mark across toolbar/popup/mic) */
+  --st-brand-grad: linear-gradient(135deg, #4285f4 0%, #6c5ce7 100%);
+  --st-brand-grad-soft: linear-gradient(135deg, #5b9bff 0%, #8a6bff 100%);
+
+  /* Layered surfaces for subtle depth on light backgrounds */
+  --st-surface-container: #f3f4fb;
+  --st-surface-container-high: #eceefa;
+
+  /* 5. Motion */
+  --st-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --st-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --st-dur-short: 150ms;
+  --st-dur-medium: 250ms;
+  --st-dur-long: 400ms;
+}
+
+:root[data-theme='dark'] {
+  /* 2. Color (Dark Theme) */
+  --st-primary: #a8c7fa;
+  --st-on-primary: #00315c;
+  --st-primary-container: #194a7a;
+  --st-on-primary-container: #d7e3ff;
+  --st-surface: #1a1c1e;
+  --st-on-surface: #e3e2e6;
+  --st-surface-variant: #44474e;
+  --st-on-surface-variant: #c4c6d0;
+  --st-outline: #8e9099;
+
+  /* Layered surfaces (dark) */
+  --st-surface-container: #25272b;
+  --st-surface-container-high: #2f3136;
+}

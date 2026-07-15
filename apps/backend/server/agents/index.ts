@@ -45,7 +45,11 @@ export async function dispatch(task: Task, opts: PiOptions = {}): Promise<Dispat
     }
   }
 
-  const last = attempts[attempts.length - 1];
+  const last = attempts.at(-1);
+  if (!last) {
+    // `chain` is always non-empty, so this is purely defensive (satisfies strict null checks).
+    throw new Error('dispatch: fallback chain produced no attempts');
+  }
   return {
     agent: last.agent,
     model: last.model,

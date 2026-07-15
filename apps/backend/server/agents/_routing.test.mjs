@@ -53,7 +53,8 @@ let pass = 0, fail = 0;
 function eq(actual, expected, label) {
   const ok = JSON.stringify(actual) === JSON.stringify(expected);
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}  -> ${JSON.stringify(actual)}`);
-  ok ? pass++ : fail++;
+  if (ok) pass++;
+  else fail++;
 }
 
 // Routing by inferred kind

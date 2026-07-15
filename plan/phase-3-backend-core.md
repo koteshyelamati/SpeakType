@@ -5,6 +5,20 @@ working behind a provider-fallback gateway.
 
 **Cost:** Free (Groq + Gemini free tiers; keys server-side only).
 
+> **Execution:** broken into agent-sized, ordered tasks in **`plan/phase-3-tasks/`** (start at
+> its `README.md`). Those tasks are written for the Gemini agent (file-authoring only; the
+> orchestrator runs all installs/migrations/typechecks). They bake in the **compatibility
+> contract** so Phase 3 can't break the shipped extension MVP:
+> routes must resolve under **`/api/...`**, responses must match the `@speaktype/shared` Zod
+> schemas exactly, audio is multipart, CORS must allow `chrome-extension://`, BetterAuth must
+> emit **UUID** user ids, and `packages/shared` + `apps/extension` are **read-only**.
+
+## Load first
+- Skill: `.claude/skills/nuxt/SKILL.md` (+ `drizzle` for DB work)
+- Memory: `memory/api-contract.md`, `memory/security-and-performance.md`, `memory/stack-decisions.md`
+- Contract: `packages/shared/src/{api-contract,schemas,constants}.ts`
+- Code: `apps/backend/server/**`
+
 ## Routes (from the design doc)
 - ☐ Auth: `POST /auth/login|register|logout|refresh`, `GET /auth/me` (BetterAuth)
 - ☐ Settings: `GET /settings`, `PUT /settings`

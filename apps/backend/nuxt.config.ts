@@ -1,4 +1,20 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
-})
+  runtimeConfig: {
+    databaseUrl: process.env.DATABASE_URL,
+    databaseUrlUnpooled: process.env.DATABASE_URL_UNPOOLED,
+    upstashRedisRestUrl: process.env.UPSTASH_REDIS_REST_URL,
+    upstashRedisRestToken: process.env.UPSTASH_REDIS_REST_TOKEN,
+    groqApiKey: process.env.GROQ_API_KEY,
+    groqModel: process.env.GROQ_MODEL || 'whisper-large-v3-turbo',
+    geminiApiKey: process.env.GEMINI_API_KEY,
+    geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+    jwtSecret: process.env.JWT_SECRET,
+    accessTokenTtlSeconds: Number(process.env.ACCESS_TOKEN_TTL_SECONDS || 900),
+    refreshTokenTtlDays: Number(process.env.REFRESH_TOKEN_TTL_DAYS || 30),
+    betterAuthSecret: process.env.BETTER_AUTH_SECRET,
+    betterAuthUrl: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+    corsOrigins: process.env.CORS_ORIGINS || '',
+  },
+});

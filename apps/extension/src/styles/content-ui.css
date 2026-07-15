@@ -1,0 +1,369 @@
+/*
+ * Styles for the content-script UI (MicIcon + InlinePreview).
+ *
+ * These components live inside a Shadow DOM, so their CSS must be injected
+ * INTO the shadow root — page-level CSS (content.css) can't cross the shadow
+ * boundary. content.ts imports this file with ?raw and appends it to the
+ * shadow root, so the rules below are intentionally NOT Vue-scoped. The `st-`
+ * class prefix keeps them collision-free.
+ *
+ * The whole UI is pinned to the bottom-center of the viewport by content.ts
+ * (a Wispr-style bar), so nothing here positions against the page.
+ */
+
+/* ============================================================
+   MicIcon — Wispr-style pill
+   ============================================================ */
+.st-mic-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.st-mic-wrapper.st-state-appearing .st-mic-pill {
+  animation: st-appear var(--st-dur-medium, 250ms) var(--st-ease-standard, cubic-bezier(.2,0,0,1)) forwards;
+}
+
+/* Pill base — gradient bar with a soft colored glow */
+.st-mic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px 0 15px;
+  border: none;
+  border-radius: var(--st-radius-full, 999px);
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  font-family: Roboto, "Google Sans", system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform var(--st-dur-short, 150ms) var(--st-ease-standard, cubic-bezier(.2,0,0,1)),
+    box-shadow var(--st-dur-short, 150ms) var(--st-ease-standard, cubic-bezier(.2,0,0,1)),
+    opacity var(--st-dur-short, 150ms) var(--st-ease-standard, cubic-bezier(.2,0,0,1));
+}
+
+/* Glassy top highlight + crisp 1px ring so it reads on any page */
+.st-mic-pill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 55%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.st-mic-glyph {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.st-mic-label {
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Focus ring */
+.st-mic-pill:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--st-surface, #fff),
+    0 0 0 5px var(--st-primary, #4285F4);
+}
+
+/* State: idle — brand gradient blue→indigo, soft blue glow */
+.st-mic-pill.st-idle {
+  background: var(--st-brand-grad, linear-gradient(135deg, #4285f4 0%, #6c5ce7 100%));
+  opacity: 0.96;
+  box-shadow:
+    0 6px 18px rgba(66, 99, 235, 0.42),
+    0 1px 3px rgba(60, 64, 67, 0.25);
+}
+
+.st-mic-pill.st-idle:hover,
+.st-mic-pill.st-idle:focus-visible {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 24px rgba(66, 99, 235, 0.5),
+    0 2px 5px rgba(60, 64, 67, 0.25);
+}
+
+/* State: recording — vivid, with a pulsing halo */
+.st-mic-pill.st-recording {
+  background: var(--st-brand-grad-soft, linear-gradient(135deg, #5b9bff 0%, #8a6bff 100%));
+  opacity: 1;
+  animation: st-halo 2s var(--st-ease-standard, cubic-bezier(.2,0,0,1)) infinite;
+}
+
+/* State: uploading */
+.st-mic-pill.st-uploading {
+  background: var(--st-brand-grad, linear-gradient(135deg, #4285f4 0%, #6c5ce7 100%));
+  opacity: 0.97;
+  cursor: wait;
+  box-shadow: 0 6px 16px rgba(66, 99, 235, 0.35);
+}
+
+/* State: success */
+.st-mic-pill.st-success {
+  background: linear-gradient(140deg, var(--st-secondary, #34A853), #2e9e6b);
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(52, 168, 83, 0.42);
+}
+
+/* State: error */
+.st-mic-pill.st-error {
+  background: linear-gradient(140deg, var(--st-error, #EA4335), #d83a2e);
+  opacity: 1;
+  box-shadow: 0 6px 16px rgba(234, 67, 53, 0.4);
+}
+
+/* Equalizer (recording) */
+.st-eq {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+}
+
+.st-eq i {
+  display: block;
+  width: 2.5px;
+  height: 40%;
+  border-radius: 999px;
+  background: currentColor;
+  animation: st-eq-bounce 1s var(--st-ease-standard, cubic-bezier(.2,0,0,1)) infinite;
+}
+
+.st-eq i:nth-child(1) { animation-delay: 0ms; }
+.st-eq i:nth-child(2) { animation-delay: 150ms; }
+.st-eq i:nth-child(3) { animation-delay: 300ms; }
+.st-eq i:nth-child(4) { animation-delay: 80ms; }
+.st-eq i:nth-child(5) { animation-delay: 220ms; }
+
+/* Spinner (uploading) */
+.st-spin {
+  animation: st-spin 0.9s linear infinite;
+}
+
+/* Tooltip (quota) */
+.st-mic-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--st-on-surface, #1A1C1E);
+  color: var(--st-surface, #fff);
+  font-family: Roboto, "Google Sans", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 5px 9px;
+  border-radius: var(--st-radius-sm, 8px);
+  white-space: nowrap;
+  box-shadow: var(--st-elev-2);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Keyframes */
+@keyframes st-appear {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 0.96; transform: translateY(0) scale(1); }
+}
+
+@keyframes st-halo {
+  0%   { box-shadow: 0 0 0 0 rgba(66, 99, 235, 0.45), 0 6px 16px rgba(66, 99, 235, 0.4); }
+  70%  { box-shadow: 0 0 0 12px rgba(66, 99, 235, 0), 0 6px 16px rgba(66, 99, 235, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(66, 99, 235, 0), 0 6px 16px rgba(66, 99, 235, 0.4); }
+}
+
+@keyframes st-eq-bounce {
+  0%, 100% { height: 30%; }
+  50%      { height: 95%; }
+}
+
+@keyframes st-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   InlinePreview — centered above the pill, never overflows
+   ============================================================ */
+.st-preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 14px;
+  background: var(--st-surface, #FDFCFF);
+  color: var(--st-on-surface, #1A1C1E);
+  border: 1px solid color-mix(in srgb, var(--st-primary, #4285F4) 12%, transparent);
+  border-radius: var(--st-radius-lg, 20px);
+  box-shadow:
+    0 12px 32px rgba(60, 64, 67, 0.26),
+    0 2px 8px rgba(60, 64, 67, 0.16);
+  font-family: Roboto, "Google Sans", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.st-preview-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.st-preview-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--st-radius-full, 999px);
+  background: var(--st-brand-grad, linear-gradient(135deg, #4285f4 0%, #6c5ce7 100%));
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.st-preview-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--st-on-surface, #1A1C1E);
+}
+
+.st-preview-caption {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--st-on-surface-variant, #44474E);
+}
+
+.st-preview-text {
+  width: 100%;
+}
+
+.st-preview-content {
+  margin: 0;
+  padding: 10px 12px;
+  max-height: 160px;
+  overflow-y: auto;
+  word-break: break-word;
+  color: var(--st-on-surface, #1A1C1E);
+  background: var(--st-surface-variant, #E1E2EC);
+  border-radius: var(--st-radius-md, 12px);
+}
+
+.st-preview-edit {
+  width: 100%;
+  border: 1px solid var(--st-outline, #74777F);
+  border-radius: var(--st-radius-md, 12px);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--st-on-surface, #1A1C1E);
+  background: var(--st-surface, #fff);
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.st-preview-edit:focus {
+  border-color: var(--st-primary, #4285F4);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--st-primary, #4285F4) 22%, transparent);
+}
+
+.st-preview-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.st-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--st-radius-full, 999px);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 150ms var(--st-ease-standard, cubic-bezier(.2,0,0,1)),
+    box-shadow 150ms var(--st-ease-standard, cubic-bezier(.2,0,0,1)),
+    filter 150ms var(--st-ease-standard, cubic-bezier(.2,0,0,1));
+  outline: none;
+}
+
+.st-btn:focus-visible {
+  outline: 2px solid var(--st-primary, #4285F4);
+  outline-offset: 2px;
+}
+
+/* Filled primary — brand gradient to match the mic */
+.st-btn-primary {
+  background: var(--st-brand-grad, linear-gradient(135deg, #4285f4 0%, #6c5ce7 100%));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(66, 99, 235, 0.35);
+}
+
+.st-btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.45);
+  filter: brightness(1.05);
+}
+
+/* Tonal */
+.st-btn-tonal {
+  background: var(--st-primary-container, #D7E3FF);
+  color: var(--st-on-primary-container, #001A41);
+}
+
+.st-btn-tonal:hover {
+  filter: brightness(0.97);
+}
+
+/* Text */
+.st-btn-text {
+  background: transparent;
+  color: var(--st-on-surface-variant, #44474E);
+  padding: 0 12px;
+}
+
+.st-btn-text:hover {
+  background: var(--st-surface-variant, #E1E2EC);
+  color: var(--st-on-surface, #1A1C1E);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .st-mic-pill,
+  .st-mic-wrapper.st-state-appearing .st-mic-pill { transition: none; animation: none; opacity: 1; }
+  .st-mic-pill.st-recording { animation: none; }
+  .st-eq i { animation: none; height: 60%; }
+  .st-spin { animation: none; }
+}

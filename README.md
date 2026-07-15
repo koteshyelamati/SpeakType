@@ -34,6 +34,7 @@ Backed by a lightweight server, SpeakType detects editable fields (like Gmail, S
 * 🗺️ **[Public Roadmap](ROADMAP.md)** — Check out our developmental phases, timeline, and current progress.
 * 📐 **[System Architecture](docs/ARCHITECTURE.md)** — Deep dive into the API contracts, the audio processing path, database schema, and security layers.
 * 🤝 **[Contributing Guide](CONTRIBUTING.md)** — Learn how to set up local environments, run coding checks, and submit code.
+* 🤖 **[AI Workflow](docs/AI-WORKFLOW.md)** — How this project uses AI agents (optional). **No subscription needed to contribute** — plain editor + `git` is fully supported.
 * 🛡️ **[Security Policy](SECURITY.md)** — Guidelines on reporting vulnerabilities.
 * 📜 **[Code of Conduct](CODE_OF_CONDUCT.md)** — Rules for a healthy and welcoming community.
 

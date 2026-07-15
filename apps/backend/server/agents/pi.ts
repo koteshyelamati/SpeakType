@@ -101,7 +101,7 @@ function lastMessageText(messages: Array<{ role?: string; content?: unknown }>):
   if (typeof last.content === 'string') return last.content;
   if (Array.isArray(last.content)) {
     return last.content
-      .map((p: any) => (typeof p === 'string' ? p : p?.text ?? ''))
+      .map((p: string | { text?: string }) => (typeof p === 'string' ? p : p?.text ?? ''))
       .join('');
   }
   return null;

@@ -5,6 +5,11 @@ assume changes work — test them.
 
 **Cost:** Free.
 
+## Load first
+- Skill: `.claude/skills/monorepo-gotchas/SKILL.md` (verify gate) + `verify` / `run`
+- Memory: `memory/api-contract.md`, `memory/security-and-performance.md`
+- Code: the area under test (`apps/extension/**`, `apps/backend/server/**`, `packages/shared/**`)
+
 ## Tasks
 - ☐ Unit tests: shared Zod schemas, `SttGateway` fallback logic, `QuotaService`, insertion helpers
 - ☐ Extension injection tests on real sites (Gmail/Slack/ChatGPT) via the browser MCP

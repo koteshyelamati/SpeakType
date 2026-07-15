@@ -8,14 +8,14 @@ the concrete tasks, and how to verify it's done.
 
 ## Phases
 
-| Phase | File | Goal |
-|---|---|---|
-| 1 | [phase-1-foundation.md](phase-1-foundation.md) | Scaffold the monorepo, DB, auth, shared contract, design + memory docs |
-| 2 | [phase-2-extension-mvp.md](phase-2-extension-mvp.md) | Mic-icon injection, recording, upload, cursor-aware insertion |
-| 3 | [phase-3-backend-core.md](phase-3-backend-core.md) | Auth, settings, usage/quota, STT gateway, AI cleanup |
-| 4 | [phase-4-billing.md](phase-4-billing.md) | Billing abstraction ready (Stripe deferred, not wired) |
-| 5 | [phase-5-security.md](phase-5-security.md) | Rate limiting, CORS, audit logging, upload validation |
-| 6 | [phase-6-testing.md](phase-6-testing.md) | Unit, injection, and end-to-end tests |
+| Phase | Status | File | Goal |
+|---|---|---|---|
+| 1 | ☑ | [phase-1-foundation.md](phase-1-foundation.md) | Scaffold the monorepo, DB, auth, shared contract, design + memory docs |
+| 2 | ☐ | [phase-2-extension-mvp.md](phase-2-extension-mvp.md) | Mic-icon injection, recording, upload, cursor-aware insertion |
+| 3 | ☐ | [phase-3-backend-core.md](phase-3-backend-core.md) | Auth, settings, usage/quota, STT gateway, AI cleanup |
+| 4 | ☐ | [phase-4-billing.md](phase-4-billing.md) | Billing abstraction ready (Stripe deferred, not wired) |
+| 5 | ☐ | [phase-5-security.md](phase-5-security.md) | Rate limiting, CORS, audit logging, upload validation |
+| 6 | ☐ | [phase-6-testing.md](phase-6-testing.md) | Unit, injection, and end-to-end tests |
 
 ## Status legend
 `☐` not started · `◐` in progress · `☑` done
